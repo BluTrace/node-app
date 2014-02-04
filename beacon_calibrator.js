@@ -2,8 +2,10 @@ var Beacon = require('./beacon')
 var fs = require('fs')
 var csv = require('csv');
 var Environment = require('./environment')
+var Localizer = require('./localizer')
 
 var environment = new Environment();
+Localizer.setEnvironment(environment);
 
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })

@@ -1,4 +1,5 @@
 var WebSocketServer = require('ws').Server
+var mediator = require('./mediator')
 
 function Environment(){
     this.beacons = {};
@@ -36,7 +37,14 @@ _env.nominateStrongestBeacon = function(){
         return a.normalizedRSSI()<b.normalizedRSSI()
     });
     //console.log(bs);
+    var change = false;
+    if(this.strongestBeacon != bs[0]){
+        change = true;
+    }
     this.strongestBeacon = bs[0];
+    if(change){
+        mediator.pubsub.emit('strongestBeaconChange');
+    }
 }
 
 _env.startListening = function(){
