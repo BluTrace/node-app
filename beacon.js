@@ -5,25 +5,28 @@ const ZONES = {
     'COLD'    : -1
 }
 
-function Beacon(macAddress,coord){
+function Beacon(macAddress,x,y){
     this.macAddress = macAddress
-    this.coord      = coord
+    this.x          = x
+    this.y          = y
     this.currentRSSI            = null
     this.rssiAtAssociationRange = null
     this.rssiAtPeriphery        = null
     this.zone                   = ZONES['COLD']
-    this.name                   = "Beacon ("+ this.macAddress + ")"
+    this.name                   = function() { return "Beacon ("+ this.macAddress + ")" }
+    this.normalizedRSSI         = function() { return this.currentRSSI*100 / this.rssiAtAssociationRange }
+    this.influencing            = function() { return this.zone!=ZONES['COLD'] }
 }
 
 Beacon.prototype.updateRSSI = function (rssi){
-    console.log(this.name+" - updating RSSI");
+    console.log(this.name()+" - updating RSSI "+rssi);
     this.currentRSSI = rssi;
-    if(this.rssiAtAssociationRange==null||this.rssiAtPeriphery==null) throw new Error(this.name+" is not calibrated!");
-    if(this.currentRSSI<this.rssiAtAssociationRange){
+    if(this.rssiAtAssociationRange==null||this.rssiAtPeriphery==null) throw new Error(this.name()+" is not calibrated!");
+    if(this.currentRSSI>=this.rssiAtAssociationRange){
         this.zone = ZONES['HOT'];
-    } else if(this.currentRSSI>=this.rssiAtAssociationRange&&(this.currentRSSI<this.rssiAtPeriphery)) {
+    } else if(this.currentRSSI<this.rssiAtAssociationRange&&(this.currentRSSI>=this.rssiAtPeriphery)) {
         this.zone = ZONES['WARM'];
-    } else if(this.currentRSSI>=this.rssiAtPeriphery) {
+    } else if(this.currentRSSI<this.rssiAtPeriphery) {
         this.zone = ZONES['COOL'];
     }
 }
