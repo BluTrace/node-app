@@ -9,6 +9,7 @@ mediator.pubsub.on('strongestBeaconChange',function(msg){
     x = beacon.x;
     y = beacon.y;
     console.log("===========> Relocalizing to: ("+x+","+y+")");
+    mediator.pubsub.emit('newLocation');
 })
 
 function setEnvironment(e){

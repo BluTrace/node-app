@@ -9,7 +9,9 @@
   "dependencies": {
     "ws" : "0.4.*",
     "csv": "0.3.*",
-    "underscore": "1.5.*"
+    "underscore": "1.5.*",
+    "noble": "0.2.*",
+    "sensortag": "0.1.*"
   },
   "repository": {
     "type": "git",
