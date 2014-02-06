@@ -1,7 +1,6 @@
 var mediator = require('./mediator'),
     cheapest_paths = require('graph-paths').cheapest_paths,
-    environment = require('./environment'),
-    localizer = require('./localizer'),
+    Environment = require('./environment'),
     csv = require('csv'),
     cheapestPath = null,
     destinationBeaconMacAddress = null;
