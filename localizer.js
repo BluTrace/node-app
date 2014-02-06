@@ -6,7 +6,7 @@ var x = null,
     environ = null;
 
 mediator.pubsub.on('strongestBeaconChange',function(msg){
-    var beacon = Environment.strongestBeacon;
+    var beacon = Environment.getStrongestBeacon();
     x = beacon.x;
     y = beacon.y;
     console.log("===========> Relocalizing to: ("+x+","+y+")");
