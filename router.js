@@ -52,7 +52,7 @@ mediator.pubsub.on('pathCalculated',function(){
 });
 
 mediator.pubsub.on('newLocation',function(){
-    var startingBeaconMacAddress = environment.strongestBeacon().macAddress;
+    var startingBeaconMacAddress = Environment.strongestBeacon.macAddress;
     if(startingBeaconMacAddress==destinationBeaconMacAddress)
         mediator.pubsub.emit('destinationReached');
     if(destinationBeaconMacAddress&&startingBeaconMacAddress)

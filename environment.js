@@ -1,35 +1,29 @@
 var WebSocketServer = require('ws').Server
 var mediator = require('./mediator')
-var _ = require('underscore')
+var _ = require('underscore'),
+    beacons = {},
+    strongestBeacon = null,
+    updateBeacon = updateBeacon;
 
-function Environment(){
-    this.beacons = {};
-    this.strongestBeacon = null;
-    this.updateBeacon = updateBeacon;
-}
-
-var _env = Environment.prototype;
-
-_env.addBeacon = function(beacon){
-    this.beacons[beacon.macAddress]=beacon;
+var addBeacon = function(beacon){
+    beacons[beacon.macAddress]=beacon;
 }
 
 var updateBeacon = function(macAddress,rssi){
-    var beacon = this.beacons[macAddress];
+    var beacon = beacons[macAddress];
     if(beacon){
         beacon.updateRSSI(rssi);
     }
 }
 
-_env.dump = function(){
-    console.log(this.beacons);
+var dump = function(){
+    console.log(beacons);
 }
 
-_env.nominateStrongestBeacon = function(){
-    //console.log(this.dump());
+var nominateStrongestBeacon = function(){
     var bs = [];
-    for(var i in this.beacons){
-        bs.push(this.beacons[i]);
+    for(var i in beacons){
+        bs.push(beacons[i]);
     }
     bs = bs.filter(function(b){
                 return b.influencing()==true
@@ -46,18 +40,17 @@ _env.nominateStrongestBeacon = function(){
 
     //console.log(bs);
     var change = false;
-    if(this.strongestBeacon != bs[0]){
+    if(strongestBeacon != bs[0]){
         change = true;
     }
-    this.strongestBeacon = bs[0];
+    strongestBeacon = bs[0];
     if(change){
         mediator.pubsub.emit('strongestBeaconChange');
     }
 }
 
-_env.startListening = function(){
-    var self = this,
-        wss = new WebSocketServer({port: 9999});
+var startListening = function(){
+    var wss = new WebSocketServer({port: 9999});
     wss.on('connection', function(ws) {
         ws.on('message', function(message) {
             message = JSON.parse(message);
@@ -65,11 +58,11 @@ _env.startListening = function(){
             for(var i in message){
                 macAddress = message[i][0];
                 rssi = message[i][1];
-                self.updateBeacon(macAddress,rssi)
+                updateBeacon(macAddress,rssi)
             }
-            self.nominateStrongestBeacon();
-            if(self.strongestBeacon){
-             console.log('strongest Beacon is: '+self.strongestBeacon.name());
+            nominateStrongestBeacon();
+            if(strongestBeacon){
+             console.log('strongest Beacon is: '+strongestBeacon.name());
             } else {
              console.log('No beacon!');
             }
@@ -85,4 +78,6 @@ function parseMessage(message){
 
 
 
-module.exports = Environment;
+module.exports.startListening = startListening;
+module.exports.dump = dump;
+module.exports.addBeacon = addBeacon;
