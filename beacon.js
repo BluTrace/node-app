@@ -5,15 +5,20 @@ const ZONES = {
     'COLD'    : -1
 }
 
-function Beacon(macAddress,x,y){
+function Beacon(macAddress,name,x,y){
     this.macAddress = macAddress
     this.x          = x
     this.y          = y
+    if(name){
+        this.btName = name
+    } else {
+        this.btName = macAddress
+    }
     this.currentRSSI            = null
     this.rssiAtAssociationRange = null
     this.rssiAtPeriphery        = null
     this.zone                   = ZONES['COLD']
-    this.name                   = function() { return "Beacon ("+ this.macAddress + ")" }
+    this.name                   = function() { return "Beacon ("+ this.macAddress + ")"+this.btName }
     this.normalizedRSSI         = function() { return this.currentRSSI*100 / this.rssiAtAssociationRange }
     this.influencing            = function() { return this.zone!=ZONES['COLD'] }
 }
