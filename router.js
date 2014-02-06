@@ -49,7 +49,7 @@ var setDestinationBeaconMacAddress = function(macAddress){
 module.exports.setDestinationBeaconMacAddress = setDestinationBeaconMacAddress;
 
 mediator.pubsub.on('pathCalculated',function(){
-    console.log("Path => "+json.dumps(cheapestPath));
+    console.dir(cheapestPath);
 });
 
 mediator.pubsub.on('newLocation',function(){
