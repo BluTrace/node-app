@@ -1,5 +1,6 @@
 var WebSocketServer = require('ws').Server
 var mediator = require('./mediator')
+var _ = require('underscore')
 
 function Environment(){
     this.beacons = {};
@@ -25,6 +26,7 @@ _env.dump = function(){
 }
 
 _env.nominateStrongestBeacon = function(){
+    //console.log(this.dump());
     var bs = [];
     for(var i in this.beacons){
         bs.push(this.beacons[i]);
@@ -32,10 +34,16 @@ _env.nominateStrongestBeacon = function(){
     bs = bs.filter(function(b){
                 return b.influencing()==true
             })
-    console.log("competing beacons count "+bs.length)
-    bs = bs.sort(function(a,b){
-        return a.normalizedRSSI()<b.normalizedRSSI()
-    });
+    //console.log("competing beacons"+bs.map(function(el){return el.name()+" "+el.normalizedRSSI();}))
+    //var sorted_beacons = bs.sort(function(a,b){
+    //    return a.normalizedRSSI()>b.normalizedRSSI();
+    //});
+    var sorted_beacons = _.sortBy(bs,function(el){ return el.normalizedRSSI(); });
+    bs = sorted_beacons;
+    //console.log(bs.map(function(el){
+    //    return el.name()+" "+el.currentRSSI+" "+el.normalizedRSSI();
+    //}).join("\n"));
+
     //console.log(bs);
     var change = false;
     if(this.strongestBeacon != bs[0]){
@@ -53,7 +61,7 @@ _env.startListening = function(){
     wss.on('connection', function(ws) {
         ws.on('message', function(message) {
             message = JSON.parse(message);
-            console.log(message);
+            //console.log(message);
             for(var i in message){
                 macAddress = message[i][0];
                 rssi = message[i][1];

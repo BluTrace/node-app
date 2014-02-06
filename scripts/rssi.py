@@ -1,7 +1,7 @@
 # performs a simple device inquiry, followed by a remote name request of each
 # discovered device
 
-SAMPLES = 5
+SAMPLES = 100
 
 import os
 import time

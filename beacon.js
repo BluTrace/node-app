@@ -19,12 +19,12 @@ function Beacon(macAddress,name,x,y){
     this.rssiAtPeriphery        = null
     this.zone                   = ZONES['COLD']
     this.name                   = function() { return "Beacon ("+ this.macAddress + ")"+this.btName }
-    this.normalizedRSSI         = function() { return this.currentRSSI*100 / this.rssiAtAssociationRange }
+    this.normalizedRSSI         = function() { return parseInt(this.currentRSSI*100 / this.rssiAtAssociationRange) }
     this.influencing            = function() { return this.zone!=ZONES['COLD'] }
 }
 
 Beacon.prototype.updateRSSI = function (rssi){
-    console.log(this.name()+" - updating RSSI "+rssi);
+    //console.log(this.name()+" - updating RSSI "+rssi);
     this.currentRSSI = rssi;
     if(this.rssiAtAssociationRange==null||this.rssiAtPeriphery==null) throw new Error(this.name()+" is not calibrated!");
     if(this.currentRSSI>=this.rssiAtAssociationRange){
