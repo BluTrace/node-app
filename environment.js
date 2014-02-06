@@ -48,17 +48,23 @@ _env.nominateStrongestBeacon = function(){
 }
 
 _env.startListening = function(){
-    var self = this;
-    var wss = new WebSocketServer({port: 9999});
+    var self = this,
+        wss = new WebSocketServer({port: 9999});
     wss.on('connection', function(ws) {
         ws.on('message', function(message) {
             message = JSON.parse(message);
             console.log(message);
-            for(var macAddress in message){
-                self.updateBeacon(macAddress,message[macAddress].rssi)
+            for(var i in message){
+                macAddress = message[i][0];
+                rssi = message[i][1];
+                self.updateBeacon(macAddress,rssi)
             }
             self.nominateStrongestBeacon();
-            console.log('strongest Beacon is: '+self.strongestBeacon.name());
+            if(self.strongestBeacon){
+             console.log('strongest Beacon is: '+self.strongestBeacon.name());
+            } else {
+             console.log('No beacon!');
+            }
             ws.send('ACK');
         });
     });

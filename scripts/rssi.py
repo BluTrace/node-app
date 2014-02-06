@@ -1,13 +1,17 @@
 # performs a simple device inquiry, followed by a remote name request of each
 # discovered device
 
-SAMPLES = 1
+SAMPLES = 5
 
 import os
 import time
 import sys
 import struct
 import bluetooth._bluetooth as bluez
+import json
+from websocket import create_connection
+
+ws = create_connection("ws://localhost:9999")
 
 def printpacket(pkt):
     for c in pkt:
@@ -160,14 +164,18 @@ d = dict()
 for x in xrange(SAMPLES):
  print "**SCANNING**"
  results = device_inquiry_with_with_rssi(sock)
- for result in results:
-  d.setdefault(result[0], [0 for i in range(SAMPLES)])
-  if(d[result[0]][x]==0):
-   d[result[0]][x]=result[1]
-  else:   
-   d[result[0]][x]=(d[result[0]][x]+result[1])/2
- print "Move "+repr(x)
- time.sleep(5)
+ message = json.dumps(results)
+ print message
+ ws.send(message)
+ print ws.recv()
+ #for result in results:
+ # d.setdefault(result[0], [0 for i in range(SAMPLES)])
+ # if(d[result[0]][x]==0):
+ #  d[result[0]][x]=result[1]
+ # else:   
+ #  d[result[0]][x]=(d[result[0]][x]+result[1])/2
+ #print "Move "+repr(x)
+ #time.sleep(5)
 
 for key, value in d.items():
  print repr(key) + "=>" + repr(value)
