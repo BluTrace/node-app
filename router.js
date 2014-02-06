@@ -54,6 +54,8 @@ mediator.pubsub.on('pathCalculated',function(){
 
 mediator.pubsub.on('newLocation',function(){
     var startingBeaconMacAddress = Environment.getStrongestBeacon().macAddress;
+    console.log('startingBeaconMacAddress   : '+startingBeaconMacAddress);
+    console.log('destinationBeaconMacAddress: '+destinationBeaconMacAddress);
     if(startingBeaconMacAddress==destinationBeaconMacAddress)
         mediator.pubsub.emit('destinationReached');
     if(destinationBeaconMacAddress&&startingBeaconMacAddress)
