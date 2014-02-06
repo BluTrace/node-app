@@ -12,7 +12,7 @@ mediator.pubsub.on('waypointReached',function(message){
 });
 
 mediator.pubsub.on('destinationReached',function(message){
-
+    console.log('DESTINATION REACHED!');
 });
 
 
