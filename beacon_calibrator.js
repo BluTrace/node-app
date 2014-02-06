@@ -3,9 +3,12 @@ var fs = require('fs')
 var csv = require('csv');
 var Environment = require('./environment')
 var Localizer = require('./localizer')
+var Router = require('./router')
 
 var environment = new Environment();
 Localizer.setEnvironment(environment);
+
+Router.setDestinationBeaconMacAddress('60:03:08:8B:86:8F');
 
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })
