@@ -27,6 +27,8 @@ var calculate_path = function(source_mac, destination_mac){
             });
             var source = beacons_mac.indexOf(source_mac);
             var destination = beacons_mac.indexOf(destination_mac);
+            if(source==-1||destination==-1)
+             return null;
             var cheapest_paths_from_source = cheapest_paths(costs, source);
             cheapestPath = cheapest_paths_from_source[destination];
             var path = [];
@@ -47,7 +49,7 @@ var setDestinationBeaconMacAddress = function(macAddress){
 module.exports.setDestinationBeaconMacAddress = setDestinationBeaconMacAddress;
 
 mediator.pubsub.on('pathCalculated',function(){
-    console.log("Path => "+cheapestPath);
+    console.log("Path => "+json.dumps(cheapestPath));
 });
 
 mediator.pubsub.on('newLocation',function(){
