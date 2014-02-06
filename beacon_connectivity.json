@@ -1,6 +1,0 @@
-{
-    "One" : [{ "n" : "Two", "w" : 1}, {"n" : "Three", "w" : 0}, {"n" : "Four", "w" : "Infinity"}],
-    "Two" : [],
-    "Three" : [],
-    "Four" : []
-}

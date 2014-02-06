@@ -1,0 +1,6 @@
+Mac1,Mac2,1,Mac3,1
+Mac2,Mac1,1,Mac4,1,Mac3,1
+Mac3,Mac1,1,Mac5,1,Mac2,1
+Mac4,Mac2,1,Mac5,1
+Mac5,Mac4,1,Mac3,1,Mac6,1
+Mac6,Mac5,1
