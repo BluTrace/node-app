@@ -14,6 +14,13 @@ var startSensing = function() {
             sensorTag.on('magnetometerChange', function(x, y, z){
                 console.log('----> ('+x+','+y+','+z+')');
             });
+            sensorTag.on('simpleKeyChange', function(left, right) {
+                if (left) {
+                    console.log('Left Key Pressed');
+                } else if (right) {
+                    console.log('Right Key Pressed');
+                }
+            });
         });
     });
 }
