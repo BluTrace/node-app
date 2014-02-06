@@ -4,8 +4,9 @@ var csv = require('csv');
 var Environment = require('./environment')
 var Localizer = require('./localizer')
 var Router = require('./router')
+var Guide = require('./guide')
 
-Router.setDestinationBeaconMacAddress('60:03:08:8B:86:8F');
+Router.setDestinationBeaconMacAddress('14:10:9F:D6:CC:B4');
 
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })
