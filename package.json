@@ -11,7 +11,8 @@
     "csv": "0.3.*",
     "underscore": "1.5.*",
     "noble": "0.2.*",
-    "sensortag": "0.1.*"
+    "sensortag": "0.1.*",
+    "graph-paths": "0.4.*"
   },
   "repository": {
     "type": "git",
