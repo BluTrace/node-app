@@ -1,6 +1,7 @@
 var util = require('util');
 var async = require('async');
 var SensorTag = require('sensortag');
+var mediator = require('./mediator');
 
 var startSensing = function() {
     SensorTag.discover(function(sensorTag){
@@ -37,18 +38,13 @@ var startSensing = function() {
                     //console.log('\tx = %d μT', x.toFixed(4));
                     //console.log('\ty = %d μT', y.toFixed(4));
                     //console.log('\tz = %d μT', z.toFixed(4));
-x=x+31;
-y=y-45.5;
-z=z+27;
-//console.log(x.toFixed(4)+','+y.toFixed(4)+','+z.toFixed(4));                    
-var radians;/*
-                    if(y>0)
-                        radians = 90 - [Math.atan2(y,x)]*180/Math.PI;
-                    else if(y<0)
-                        radians = 270 - [Math.atan2(y,x)]*180/Math.PI;
-*/
-radians = 40+[Math.atan2(y,x)]*180/Math.PI;                    
-console.log("========================> "+radians);
+                    x=x+31;
+                    y=y-45.5;
+                    z=z+27;
+                    //console.log(x.toFixed(4)+','+y.toFixed(4)+','+z.toFixed(4));
+                    var degrees = 40+[Math.atan2(y,x)]*180/Math.PI;
+                    mediator.pubsub.emit('orientationChanged',{'orientation':degrees});
+                    //console.log("========================> "+degrees);
                 });
                 sensorTag.notifyMagnetometer(function() {
                     console.log('M notified!');
@@ -89,5 +85,3 @@ console.log("========================> "+radians);
 }
 
 module.exports.startSensing = startSensing;
-
-startSensing();
