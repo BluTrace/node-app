@@ -14,6 +14,11 @@ var calculate = function (sourceObj, destinationObj) {
     return directionVector;
 };
 
+var getDegree = function(vector){
+    return Math.atan2(vector.y,vector.x)*180/Math.PI;
+}
+
 module.exports.calculate = calculate;
+module.exports.getDegree = getDegree;
 
 //calculateDirection(new beacon('mac1','Paras', 3, 2), new beacon('mac2','Shashank', 9, 4));

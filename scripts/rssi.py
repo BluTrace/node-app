@@ -175,7 +175,7 @@ for x in xrange(SAMPLES):
  # else:   
  #  d[result[0]][x]=(d[result[0]][x]+result[1])/2
  #print "Move "+repr(x)
- #time.sleep(5)
+ time.sleep(1)
 
 for key, value in d.items():
  print repr(key) + "=>" + repr(value)
