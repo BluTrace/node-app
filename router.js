@@ -10,6 +10,10 @@ var mediator = require('./mediator'),
     destinationMac = null,
     pathVector = null;
 
+var getPathVector = function(){
+    return pathVector;
+}
+
 var calculate_path = function(source_mac, destination_mac){
     csv()
         .from.path('./beacon_connectivity.csv', { comment: '#', delimiter: ',', escape: '"' })
@@ -54,6 +58,8 @@ var setDestinationBeaconMacAddress = function(macAddress){
 }
 
 module.exports.setDestinationBeaconMacAddress = setDestinationBeaconMacAddress;
+module.exports.getPathVector = getPathVector;
+
 
 mediator.pubsub.on('pathCalculated',function(){
     console.dir(cheapestPath);
