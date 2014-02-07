@@ -3,7 +3,8 @@ var mediator = require('./mediator'),
     localizer = require('./localizer');
 
 mediator.pubsub.on('orientationChanged',function(message){
-    console.log('current orientation: '+condole.dir(message));
+    console.log('re-orienting')
+    console.dir(message);
 });
 
 mediator.pubsub.on('waypointReached',function(message){

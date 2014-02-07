@@ -5,6 +5,9 @@ var Environment = require('./environment')
 var Localizer = require('./localizer')
 var Router = require('./router')
 var Guide = require('./guide')
+var Sensor = require('./sensor')
+
+Sensor.startSensing();
 
 Router.setDestinationBeaconMacAddress('14:10:9F:D6:CC:B4');
 

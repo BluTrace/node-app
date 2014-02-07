@@ -3,6 +3,14 @@ var async = require('async');
 var SensorTag = require('sensortag');
 var mediator = require('./mediator');
 
+var degreeOfOrientation = 0;
+
+const THRESHOLD = 10;
+
+var getDegreeOfOrientation = function(){
+    return degreeOfOrientation;
+}
+
 var startSensing = function() {
     SensorTag.discover(function(sensorTag){
         console.log('discovered');
@@ -43,7 +51,10 @@ var startSensing = function() {
                     z=z+27;
                     //console.log(x.toFixed(4)+','+y.toFixed(4)+','+z.toFixed(4));
                     var degrees = 40+[Math.atan2(y,x)]*180/Math.PI;
-                    mediator.pubsub.emit('orientationChanged',{'orientation':degrees});
+                    if(Math.abs(degrees-degreeOfOrientation)>THRESHOLD){
+                        mediator.pubsub.emit('orientationChanged',JSON.stringify({'orientation':degrees}));
+                        degreeOfOrientation = degrees;
+                    }
                     //console.log("========================> "+degrees);
                 });
                 sensorTag.notifyMagnetometer(function() {
