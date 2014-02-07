@@ -34,6 +34,12 @@ var startSensing = function() {
                     console.log('\tx = %d μT', x.toFixed(4));
                     console.log('\ty = %d μT', y.toFixed(4));
                     console.log('\tz = %d μT', z.toFixed(4));
+                    var radians;
+                    if(y>0)
+                        radians = 90 - [Math.tan2(y,x)]*180/Math.PI;
+                    else if(y<0)
+                        radians = 270 - [Math.tan2(y,x)]*180/Math.PI;
+                    console.log("========================> "+radians);
                 });
                 sensorTag.notifyMagnetometer(function() {
                     console.log('M notified!');
@@ -41,7 +47,7 @@ var startSensing = function() {
                 });
             callback();
             },
-            function(callback){
+            /*function(callback){
                 sensorTag.on('gyroscopeChange', function(x, y, z) {
                 console.log('\tx = %d °/s', x.toFixed(4));
                 console.log('\ty = %d °/s', y.toFixed(4));
@@ -51,7 +57,7 @@ var startSensing = function() {
                     console.log('G notified!');
                 });
             callback();
-            },
+            }, */
             function(callback) {
                 console.log('readSimpleRead');
                 sensorTag.on('simpleKeyChange', function(left, right) {
