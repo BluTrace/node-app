@@ -1,10 +1,6 @@
-/**
- * Created by Paras on 2/6/14.
- */
+//var beacon = require('./beacon');
 
-var beacon = require('./beacon');
-
-var calculateDirection = function (sourceObj, destinationObj) {
+var calculate = function (sourceObj, destinationObj) {
     var directionVector = {};
     directionVector.x = destinationObj.x - sourceObj.x;
     directionVector.y = destinationObj.y - sourceObj.y;
@@ -18,4 +14,6 @@ var calculateDirection = function (sourceObj, destinationObj) {
     return directionVector;
 };
 
-calculateDirection(new beacon('mac1','Paras', 3, 2), new beacon('mac2','Shashank', 9, 4));
+module.exports.calculate = calculate;
+
+//calculateDirection(new beacon('mac1','Paras', 3, 2), new beacon('mac2','Shashank', 9, 4));

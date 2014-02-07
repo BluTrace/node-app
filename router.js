@@ -1,9 +1,14 @@
 var mediator = require('./mediator'),
     cheapest_paths = require('graph-paths').cheapest_paths,
     Environment = require('./environment'),
+    Beacon = require('./beacon'),
+    Vector = require('./vector'),
     csv = require('csv'),
     cheapestPath = null,
-    destinationBeaconMacAddress = null;
+    destinationBeaconMacAddress = null,
+    sourceMac = null,
+    destinationMac = null,
+    pathVector = null;
 
 var calculate_path = function(source_mac, destination_mac){
     csv()
@@ -29,6 +34,8 @@ var calculate_path = function(source_mac, destination_mac){
             var destination = beacons_mac.indexOf(destination_mac);
             if(source==-1||destination==-1)
              return null;
+            sourceMac = source_mac;
+            destinationMac = destination_mac;
             var cheapest_paths_from_source = cheapest_paths(costs, source);
             cheapestPath = cheapest_paths_from_source[destination];
             var path = [];
@@ -50,7 +57,14 @@ module.exports.setDestinationBeaconMacAddress = setDestinationBeaconMacAddress;
 
 mediator.pubsub.on('pathCalculated',function(){
     console.dir(cheapestPath);
+    var b1,b2;
+    b1 = Environment.getBeacon(sourceMac);
+    b2 = Environment.getBeacon(destinationMac);
+    pathVector = Vector.calculate(b1,b2);
+    console.dir(pathVector);
 });
+
+
 
 mediator.pubsub.on('newLocation',function(){
     var startingBeaconMacAddress = Environment.getStrongestBeacon().macAddress;
