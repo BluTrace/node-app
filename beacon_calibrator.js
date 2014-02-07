@@ -9,7 +9,7 @@ var Sensor = require('./sensor')
 
 Sensor.startSensing();
 
-Router.setDestinationBeaconMacAddress('14:10:9F:D6:CC:B4');
+Router.setDestinationBeaconMacAddress(process.argv[2]);
 
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })

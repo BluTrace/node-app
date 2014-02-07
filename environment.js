@@ -5,6 +5,9 @@ var _ = require('underscore'),
     strongestBeacon = null,
     updateBeacon = updateBeacon;
 
+var getBeacon = function(macAddr){
+    return beacons[macAddr];
+}
 var getStrongestBeacon = function(){
     return strongestBeacon;
 }
@@ -85,3 +88,4 @@ module.exports.startListening = startListening;
 module.exports.dump = dump;
 module.exports.addBeacon = addBeacon;
 module.exports.getStrongestBeacon = getStrongestBeacon;
+module.exports.getBeacon = getBeacon;
