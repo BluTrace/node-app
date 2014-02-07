@@ -22,6 +22,9 @@ var startSensing = function() {
                 console.log('enableMagnetometer');
                 sensorTag.enableMagnetometer(callback);
             },
+           function(callback) {
+	        sensorTag.setMagnetometerPeriod(200,callback);
+            },
             function(callback) {
                 console.log('enableGyroscope');
                 sensorTag.enableGyroscope(callback);
@@ -31,15 +34,21 @@ var startSensing = function() {
             },
             function(callback) {
                 sensorTag.on('magnetometerChange', function(x, y, z) {
-                    console.log('\tx = %d μT', x.toFixed(4));
-                    console.log('\ty = %d μT', y.toFixed(4));
-                    console.log('\tz = %d μT', z.toFixed(4));
-                    var radians;
+                    //console.log('\tx = %d μT', x.toFixed(4));
+                    //console.log('\ty = %d μT', y.toFixed(4));
+                    //console.log('\tz = %d μT', z.toFixed(4));
+x=x+31;
+y=y-45.5;
+z=z+27;
+//console.log(x.toFixed(4)+','+y.toFixed(4)+','+z.toFixed(4));                    
+var radians;/*
                     if(y>0)
-                        radians = 90 - [Math.tan2(y,x)]*180/Math.PI;
+                        radians = 90 - [Math.atan2(y,x)]*180/Math.PI;
                     else if(y<0)
-                        radians = 270 - [Math.tan2(y,x)]*180/Math.PI;
-                    console.log("========================> "+radians);
+                        radians = 270 - [Math.atan2(y,x)]*180/Math.PI;
+*/
+radians = 40+[Math.atan2(y,x)]*180/Math.PI;                    
+console.log("========================> "+radians);
                 });
                 sensorTag.notifyMagnetometer(function() {
                     console.log('M notified!');
