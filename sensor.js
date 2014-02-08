@@ -31,8 +31,8 @@ var startSensing = function() {
                 console.log('enableMagnetometer');
                 sensorTag.enableMagnetometer(callback);
             },
-           function(callback) {
-	        sensorTag.setMagnetometerPeriod(200,callback);
+            function(callback) {
+                sensorTag.setMagnetometerPeriod(200,callback);
             },
             function(callback) {
                 console.log('enableGyroscope');
