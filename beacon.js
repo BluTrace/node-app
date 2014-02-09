@@ -26,7 +26,7 @@ function Beacon(macAddress,name,x,y){
 
 Beacon.prototype.updateRSSI = function (rssi){
     this.currentRSSI = rssi;
-    this.addSignalHistory();
+    this.signalHistory.push(rssi);
     if(this.rssiAtAssociationRange==null||this.rssiAtPeriphery==null) throw new Error(this.name()+" is not calibrated!");
     if(this.currentRSSI>=this.rssiAtAssociationRange){
         this.zone = ZONES['HOT'];

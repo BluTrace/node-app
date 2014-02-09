@@ -1,7 +1,7 @@
 var util = require('util');
 var async = require('async');
 var SensorTag = require('sensortag');
-var mediator = require('./mediator');
+var Mediator = require('./mediator');
 
 var degreeOfOrientation = 0;
 
@@ -52,7 +52,7 @@ var startSensing = function() {
                     //console.log(x.toFixed(4)+','+y.toFixed(4)+','+z.toFixed(4));
                     var degrees = 40+[Math.atan2(y,x)]*180/Math.PI;
                     if(Math.abs(degrees-degreeOfOrientation)>THRESHOLD){
-                        mediator.pubsub.emit('orientationChanged',JSON.stringify({'orientation':degrees}));
+                        Mediator.pubsub.emit('orientationChanged',JSON.stringify({'orientation':degrees}));
                         degreeOfOrientation = degrees;
                     }
                     //console.log("========================> "+degrees);
