@@ -33,6 +33,7 @@ mediator.pubsub.on('rightKeyPressed',function(){
     } else {
         console.log('unreachable destination');
     }
+    Router.setDestinationBeaconMacAddress(choice);
 })
 
 

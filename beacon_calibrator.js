@@ -17,6 +17,7 @@ csv()
             beacon.calibrate(row[6],row[7]);
             Environment.addBeacon(beacon);
         });
+        Destinations.loadLocations();
         Router.loadPaths();
         Environment.startListening();
         Sensor.startSensing();
