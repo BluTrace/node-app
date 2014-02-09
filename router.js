@@ -60,6 +60,8 @@ console.log(cheapest_paths_from_source);
 
 var setDestinationBeaconMacAddress = function(macAddress){
     destinationBeaconMacAddress = macAddress;
+    console.log('Now you are travelling to '+macAddress);
+    mediator.pubsub.emit('newDestination');
 }
 
 var isReachable = function(macAddress){
@@ -79,9 +81,15 @@ mediator.pubsub.on('pathCalculated',function(){
     console.dir(pathVector);
 });
 
-
+mediator.pubsub.on('newDestination',function(){
+    recalculatePath();
+});
 
 mediator.pubsub.on('newLocation',function(){
+    recalculatePath();
+});
+
+function calculatePath(){
     var startingBeaconMacAddress = Environment.getStrongestBeacon().macAddress;
     console.log('startingBeaconMacAddress   : '+startingBeaconMacAddress);
     console.log('destinationBeaconMacAddress: '+destinationBeaconMacAddress);
@@ -91,4 +99,4 @@ mediator.pubsub.on('newLocation',function(){
         calculate_path(startingBeaconMacAddress, destinationBeaconMacAddress);
     else
         mediator.pubsub.emit('nowhereToGo');
-});
+}
