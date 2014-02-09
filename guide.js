@@ -3,7 +3,8 @@ var mediator = require('./mediator'),
     localizer = require('./localizer');
     Sensor = require('./sensor');
     Router = require('./router');
-    Vector = require('./vector');
+    Vector = require('./vector'),
+    Destinations = require('./destinations');
 
 mediator.pubsub.on('orientationChanged',function(message){
     var requiredVector = Router.getPathVector();
@@ -23,6 +24,15 @@ mediator.pubsub.on('waypointReached',function(message){
 mediator.pubsub.on('destinationReached',function(message){
     console.log('DESTINATION REACHED!');
 });
+
+mediator.pubsub.on('rightKeyPressed',function(){
+    var choice = Destinations.nextLocationChoice();
+    if(Router.isReachable(choice)){
+        console.log('reachable destination');
+    } else {
+        console.log('unreachable destination');
+    }
+})
 
 
 

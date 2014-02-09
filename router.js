@@ -8,7 +8,8 @@ var mediator = require('./mediator'),
     destinationBeaconMacAddress = null,
     sourceMac = null,
     destinationMac = null,
-    pathVector = null;
+    pathVector = null,
+    beacons_mac = [];
 
 var getPathVector = function(){
     return pathVector;
@@ -18,8 +19,8 @@ var calculate_path = function(source_mac, destination_mac){
     csv()
         .from.path('./beacon_connectivity.csv', { comment: '#', delimiter: ',', escape: '"' })
         .to.array(function(data){
-            var beacons_mac = [],
-                costs = [];
+            var costs = [];
+            beacons_mac = [];
             data.forEach(function(row){
                 beacons_mac.push(row[0]);
             });
@@ -34,9 +35,7 @@ var calculate_path = function(source_mac, destination_mac){
                 }
                 costs.push(cost_array);
             });
-            var source = beacons_mac.indexOf(source_mac);
-            var destination = beacons_mac.indexOf(destination_mac);
-            if(source==-1||destination==-1)
+            if(isReachable(source_mac)||isReachable(destination_mac))
              return null;
             sourceMac = source_mac;
             destinationMac = destination_mac;
@@ -57,9 +56,13 @@ var setDestinationBeaconMacAddress = function(macAddress){
     destinationBeaconMacAddress = macAddress;
 }
 
+var isReachable = function(macAddress){
+    return beacons_mac.indexOf(macAddress)!=-1;
+}
+
 module.exports.setDestinationBeaconMacAddress = setDestinationBeaconMacAddress;
 module.exports.getPathVector = getPathVector;
-
+module.exports.isReachable = isReachable;
 
 mediator.pubsub.on('pathCalculated',function(){
     console.dir(cheapestPath);

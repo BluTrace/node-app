@@ -79,10 +79,12 @@ var startSensing = function() {
                 sensorTag.on('simpleKeyChange', function(left, right) {
                     console.log('left: ' + left);
                     console.log('right: ' + right);
-
-                    if (left && right) {
-                        sensorTag.notifySimpleKey(callback);
+                    if(right){
+                        Mediator.pubsub.emit('rightKeyPressed');
                     }
+//                    if (left && right) {
+//                        sensorTag.notifySimpleKey(callback);
+//                    }
                 });
 
                 sensorTag.notifySimpleKey(function() {

@@ -1,4 +1,4 @@
-const ZONES = {
+var ZONES = {
     'HOT'     : 2,
     'WARM'    : 1,
     'COOL'    : 0,
@@ -6,6 +6,7 @@ const ZONES = {
 }
 
 function Beacon(macAddress,name,x,y){
+    this.signalHistory = [];
     this.macAddress = macAddress
     this.x          = x
     this.y          = y
@@ -24,8 +25,8 @@ function Beacon(macAddress,name,x,y){
 }
 
 Beacon.prototype.updateRSSI = function (rssi){
-    //console.log(this.name()+" - updating RSSI "+rssi);
     this.currentRSSI = rssi;
+    this.addSignalHistory();
     if(this.rssiAtAssociationRange==null||this.rssiAtPeriphery==null) throw new Error(this.name()+" is not calibrated!");
     if(this.currentRSSI>=this.rssiAtAssociationRange){
         this.zone = ZONES['HOT'];
