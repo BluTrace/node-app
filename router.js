@@ -35,11 +35,17 @@ var calculate_path = function(source_mac, destination_mac){
                 }
                 costs.push(cost_array);
             });
-            if(isReachable(source_mac)||isReachable(destination_mac))
+            var source = beacons_mac.indexOf(source_mac);
+            var destination = beacons_mac.indexOf(destination_mac);
+            if(source==-1||destination==-1)
              return null;
             sourceMac = source_mac;
             destinationMac = destination_mac;
+console.log(beacons_mac);
+console.log(costs);
+console.log(source);
             var cheapest_paths_from_source = cheapest_paths(costs, source);
+console.log(cheapest_paths_from_source);            
             cheapestPath = cheapest_paths_from_source[destination];
             var path = [];
             cheapestPath.path.forEach(function(node){
