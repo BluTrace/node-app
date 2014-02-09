@@ -8,11 +8,6 @@ var Guide = require('./guide')
 var Sensor = require('./sensor')
 var Destinations = require('./destinations')
 
-Sensor.startSensing();
-
-Router.setDestinationBeaconMacAddress(process.argv[2]);
-Destinations.loadLocations();
-
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })
     .to.array(function(data){
@@ -22,8 +17,9 @@ csv()
             beacon.calibrate(row[6],row[7]);
             Environment.addBeacon(beacon);
         });
-        Environment.dump();
+        Router.loadPaths();
         Environment.startListening();
+        Sensor.startSensing();
     } );
 
 

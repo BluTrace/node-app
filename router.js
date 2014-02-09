@@ -9,17 +9,18 @@ var mediator = require('./mediator'),
     sourceMac = null,
     destinationMac = null,
     pathVector = null,
-    beacons_mac = [];
+    beacons_mac = [],
+    costs = [];
 
 var getPathVector = function(){
     return pathVector;
 }
 
-var calculate_path = function(source_mac, destination_mac){
+var loadPaths = function(){
     csv()
         .from.path('./beacon_connectivity.csv', { comment: '#', delimiter: ',', escape: '"' })
         .to.array(function(data){
-            var costs = [];
+            costs = [];
             beacons_mac = [];
             data.forEach(function(row){
                 beacons_mac.push(row[0]);
@@ -35,26 +36,25 @@ var calculate_path = function(source_mac, destination_mac){
                 }
                 costs.push(cost_array);
             });
-            var source = beacons_mac.indexOf(source_mac);
-            var destination = beacons_mac.indexOf(destination_mac);
-            if(source==-1||destination==-1)
-             return null;
-            sourceMac = source_mac;
-            destinationMac = destination_mac;
-console.log(beacons_mac);
-console.log(costs);
-console.log(source);
-            var cheapest_paths_from_source = cheapest_paths(costs, source);
-console.log(cheapest_paths_from_source);            
-            cheapestPath = cheapest_paths_from_source[destination];
-            var path = [];
-            cheapestPath.path.forEach(function(node){
-                path.push(beacons_mac[node]);
-            });
-            cheapestPath.path = path;
-            console.dir(cheapestPath);
-            mediator.pubsub.emit('pathCalculated');
         });
+}
+
+var calculate_path = function(source_mac, destination_mac){
+    var source = beacons_mac.indexOf(source_mac);
+    var destination = beacons_mac.indexOf(destination_mac);
+    if(source==-1||destination==-1)
+     return null;
+    sourceMac = source_mac;
+    destinationMac = destination_mac;
+    var cheapest_paths_from_source = cheapest_paths(costs, source);
+    cheapestPath = cheapest_paths_from_source[destination];
+    var path = [];
+    cheapestPath.path.forEach(function(node){
+        path.push(beacons_mac[node]);
+    });
+    cheapestPath.path = path;
+    console.dir(cheapestPath);
+    mediator.pubsub.emit('pathCalculated');
 
 };
 
@@ -68,6 +68,7 @@ var isReachable = function(macAddress){
     return beacons_mac.indexOf(macAddress)!=-1;
 }
 
+module.exports.loadPaths = loadPaths;
 module.exports.setDestinationBeaconMacAddress = setDestinationBeaconMacAddress;
 module.exports.getPathVector = getPathVector;
 module.exports.isReachable = isReachable;
@@ -89,7 +90,7 @@ mediator.pubsub.on('newLocation',function(){
     recalculatePath();
 });
 
-function calculatePath(){
+function recalculatePath(){
     var startingBeaconMacAddress = Environment.getStrongestBeacon().macAddress;
     console.log('startingBeaconMacAddress   : '+startingBeaconMacAddress);
     console.log('destinationBeaconMacAddress: '+destinationBeaconMacAddress);
