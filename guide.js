@@ -27,6 +27,7 @@ mediator.pubsub.on('destinationReached',function(message){
 
 mediator.pubsub.on('rightKeyPressed',function(){
     var choice = Destinations.nextLocationChoice();
+    console.log(choice);
     if(Router.isReachable(choice)){
         console.log('reachable destination');
     } else {
