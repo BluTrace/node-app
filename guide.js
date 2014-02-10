@@ -1,10 +1,31 @@
 var mediator = require('./mediator'),
     router = require('./router'),
-    localizer = require('./localizer');
-    Sensor = require('./sensor');
-    Router = require('./router');
+    localizer = require('./localizer'),
+    Sensor = require('./sensor'),
+    Router = require('./router'),
     Vector = require('./vector'),
-    Destinations = require('./destinations');
+    Destinations = require('./destinations'),
+    sound = require('./sound'),
+    winston = require('winston');
+
+var logger = null;
+
+var wakeup = function(){
+    logger = new (winston.Logger)({
+        transports: [
+            new (winston.transports.Console)(),
+            new (winston.transports.File)({ filename: 'guide.log' })
+        ]
+    });
+}
+
+var speak = function(words){
+    sound.speak(words);
+    logger.info(words);
+}
+
+module.exports.wakeup = wakeup;
+module.exports.speak = speak;
 
 mediator.pubsub.on('orientationChanged',function(message){
     var requiredVector = Router.getPathVector();

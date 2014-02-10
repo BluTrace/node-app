@@ -1,12 +1,16 @@
-var Beacon = require('./beacon')
-var fs = require('fs')
-var csv = require('csv');
-var Environment = require('./environment')
-var Localizer = require('./localizer')
-var Router = require('./router')
-var Guide = require('./guide')
-var Sensor = require('./sensor')
-var Destinations = require('./destinations')
+var Beacon = require('./beacon'),
+    fs = require('fs'),
+    csv = require('csv'),
+    Environment = require('./environment'),
+    Router = require('./router'),
+    Guide = require('./guide'),
+    Sensor = require('./sensor'),
+    Destinations = require('./destinations'),
+    winston = require('winston'),
+    Guide = require('./guide');
+
+Guide.wakeup();
+Guide.speak('initialising!');
 
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })
@@ -21,6 +25,7 @@ csv()
         Router.loadPaths();
         Environment.startListening();
         Sensor.startSensing();
+        Guide.speak('Ready');
     } );
 
 
