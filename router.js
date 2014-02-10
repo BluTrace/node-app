@@ -4,6 +4,8 @@ var mediator = require('./mediator'),
     Beacon = require('./beacon'),
     Vector = require('./vector'),
     csv = require('csv'),
+    Guide = require('./guide'),
+    logger = require('./logger'),
     cheapestPath = null,
     destinationBeaconMacAddress = null,
     sourceMac = null,
@@ -60,7 +62,7 @@ var calculate_path = function(source_mac, destination_mac){
 
 var setDestinationBeaconMacAddress = function(macAddress){
     destinationBeaconMacAddress = macAddress;
-    console.log('Now you are travelling to '+macAddress);
+    Guide.speak('Now you are travelling to '+macAddress);
     mediator.pubsub.emit('newDestination');
 }
 
@@ -92,8 +94,8 @@ mediator.pubsub.on('newLocation',function(){
 
 function recalculatePath(){
     var startingBeaconMacAddress = Environment.getStrongestBeacon().macAddress;
-    console.log('startingBeaconMacAddress   : '+startingBeaconMacAddress);
-    console.log('destinationBeaconMacAddress: '+destinationBeaconMacAddress);
+    logger.log('info','startingBeaconMacAddress   : '+startingBeaconMacAddress);
+    logger.log('info','destinationBeaconMacAddress: '+destinationBeaconMacAddress);
     if(startingBeaconMacAddress==destinationBeaconMacAddress)
         mediator.pubsub.emit('destinationReached');
     if(destinationBeaconMacAddress&&startingBeaconMacAddress)

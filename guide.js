@@ -31,16 +31,15 @@ mediator.pubsub.on('waypointReached',function(message){
 });
 
 mediator.pubsub.on('destinationReached',function(message){
-    console.log('DESTINATION REACHED!');
+    speak('You have reached your destination!');
 });
 
 mediator.pubsub.on('rightKeyPressed',function(){
     var choice = Destinations.nextLocationChoice();
-    console.log(choice);
     if(Router.isReachable(choice)){
-        console.log('reachable destination');
+        speak('Going to '+choice);
     } else {
-        console.log('unreachable destination');
+        speak('Unreachable destination!');
     }
     Router.setDestinationBeaconMacAddress(choice);
 })

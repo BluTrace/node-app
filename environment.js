@@ -1,5 +1,7 @@
 var WebSocketServer = require('ws').Server
-var mediator = require('./mediator')
+var mediator = require('./mediator'),
+    logger = require('logger');
+
 var _ = require('underscore'),
     beacons = {},
     strongestBeacon = null,
@@ -12,6 +14,7 @@ var getStrongestBeacon = function(){
     return strongestBeacon;
 }
 var addBeacon = function(beacon){
+    logger.log('announce','adding beacon: '+beacon.name());
     beacons[beacon.macAddress]=beacon;
 }
 
