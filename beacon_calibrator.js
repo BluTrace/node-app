@@ -1,3 +1,6 @@
+var logger = require('./logger');
+logger.setup();
+
 var Beacon = require('./beacon'),
     fs = require('fs'),
     csv = require('csv'),

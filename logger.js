@@ -15,16 +15,23 @@ var customLevels = {
     }
 };
 
-var logger = new (winston.Logger)({
+var logger = null;
+
+var setup = function(){
+ winston.addColors(customLevels.colors);
+
+ logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)(),
         new (winston.transports.File)({ filename: 'guide.log' })
     ],
     levels: customLevels.levels
-});
-
-logger.addColors(customLevels.colors);
+ });
+}
 
 var log = function(type,text){
     logger.log(type,text);
 }
+
+module.exports.setup = setup;
+module.exports.log = log;
