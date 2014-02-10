@@ -93,13 +93,17 @@ mediator.pubsub.on('newLocation',function(){
 });
 
 function recalculatePath(){
-    var startingBeaconMacAddress = Environment.getStrongestBeacon().macAddress;
-    logger.log('info','startingBeaconMacAddress   : '+startingBeaconMacAddress);
-    logger.log('info','destinationBeaconMacAddress: '+destinationBeaconMacAddress);
-    if(startingBeaconMacAddress==destinationBeaconMacAddress)
-        mediator.pubsub.emit('destinationReached');
-    if(destinationBeaconMacAddress&&startingBeaconMacAddress)
-        calculate_path(startingBeaconMacAddress, destinationBeaconMacAddress);
-    else
-        mediator.pubsub.emit('nowhereToGo');
+    var strongestBeacon = Environment.getStrongestBeacon();
+    if(strongestBeacon){
+        var startingBeaconMacAddress = strongestBeacon.macAddress;
+        logger.log('info','startingBeaconMacAddress   : '+startingBeaconMacAddress);
+        logger.log('info','destinationBeaconMacAddress: '+destinationBeaconMacAddress);
+        if(startingBeaconMacAddress==destinationBeaconMacAddress)
+            mediator.pubsub.emit('destinationReached');
+        if(destinationBeaconMacAddress&&startingBeaconMacAddress)
+            calculate_path(startingBeaconMacAddress, destinationBeaconMacAddress);
+        else
+            mediator.pubsub.emit('nowhereToGo');
+    }
+
 }

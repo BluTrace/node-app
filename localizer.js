@@ -8,10 +8,12 @@ var x = null,
 
 mediator.pubsub.on('strongestBeaconChange',function(msg){
     var beacon = Environment.getStrongestBeacon();
-    x = beacon.x;
-    y = beacon.y;
-    logger.log("announce","===========> Relocalizing to: ("+x+","+y+")");
-    mediator.pubsub.emit('newLocation');
+    if(beacon.isHot()){
+        x = beacon.x;
+        y = beacon.y;
+        logger.log("announce","===========> Relocalizing to: ("+x+","+y+")");
+        mediator.pubsub.emit('newLocation');
+    }
 })
 
 function setEnvironment(e){

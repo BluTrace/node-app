@@ -37,6 +37,10 @@ Beacon.prototype.updateRSSI = function (rssi){
     }
 }
 
+Beacon.prototype.isHot = function(){
+    return this.zone==ZONES['HOT'];
+}
+
 Beacon.prototype.calibrate = function(zone,rssi){
     if(ZONES[zone]==undefined){
         throw new Error("invalid Zone!")
