@@ -6,25 +6,13 @@ var mediator = require('./mediator'),
     Vector = require('./vector'),
     Destinations = require('./destinations'),
     sound = require('./sound'),
-    winston = require('winston');
-
-var logger = null;
-
-var wakeup = function(){
-    logger = new (winston.Logger)({
-        transports: [
-            new (winston.transports.Console)(),
-            new (winston.transports.File)({ filename: 'guide.log' })
-        ]
-    });
-}
+    logger = require('./logger');
 
 var speak = function(words){
     sound.speak(words);
-    logger.info(words);
+    logger.log('speech',words);
 }
 
-module.exports.wakeup = wakeup;
 module.exports.speak = speak;
 
 mediator.pubsub.on('orientationChanged',function(message){

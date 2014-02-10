@@ -9,7 +9,6 @@ var Beacon = require('./beacon'),
     winston = require('winston'),
     Guide = require('./guide');
 
-Guide.wakeup();
 Guide.speak('initialising!');
 
 csv()
