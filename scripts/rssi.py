@@ -12,6 +12,9 @@ import json
 import subprocess
 from websocket import create_connection
 
+if(sys.argv[1]=='calibration'):
+    nl = create_connection("ws://localhost:9998")
+
 ws = create_connection("ws://localhost:9999")
 
 def printpacket(pkt):
@@ -165,24 +168,19 @@ d = dict()
 for x in xrange(SAMPLES):
  print "**SCANNING**"
  results = device_inquiry_with_with_rssi(sock)
- p = subprocess.Popen(['../bluez-5.13/tools/hcitool','scan'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
- out, err = p.communicate()
- print out.split()[2:]
  message = json.dumps(results)
  print message
  ws.send(message)
  print ws.recv()
- #for result in results:
- # d.setdefault(result[0], [0 for i in range(SAMPLES)])
- # if(d[result[0]][x]==0):
- #  d[result[0]][x]=result[1]
- # else:   
- #  d[result[0]][x]=(d[result[0]][x]+result[1])/2
- #print "Move "+repr(x)
  if(sys.argv[1]=='calibration'):
-  
-  co-ord = raw_input('Enter co-ordinate (x,y) ')
-  raw_input('Enter any key to continue...')
+    p = subprocess.Popen(['../bluez-5.13/tools/hcitool','scan'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out, err = p.communicate()
+    lookup = out.split()[2:]
+    lookup_hash = {lookup[i]: {'name':lookup[i+1]} for i in range(0, len(lookup), 2)}
+    co-ord = raw_input('Enter co-ordinate (x,y) ')
+    lookup_hash['xy']=co-ord
+    print lookup_hash
+    raw_input('Enter any key to continue...')
  else:
   time.sleep(1)
 
