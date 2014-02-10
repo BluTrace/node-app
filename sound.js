@@ -1,15 +1,9 @@
-var baudio = require('baudio'),
-    say = require('say');
-
-var b = baudio(function (t) {
-    function sin(f){
-        return Math.sin(2*Math.PI*f*t);
-    }
-    return sin(300)*(sin(3)+sin(4)+sin(5));
-});
+//var say = require('say');
+var exec=require('child_process').exec;
 
 var speak = function(words){
-    say.speak('Alex',words);
+    //say.speak('Alex',words);
+    exec('espeak '+words);
 }
 
 module.exports.speak = speak;
