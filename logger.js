@@ -5,13 +5,15 @@ var customLevels = {
         speech: 0,
         data: 1,
         info: 2,
-        warn: 3
+        warn: 3,
+        announce: 4
     },
     colors: {
-        foo: 'blue',
-        bar: 'green',
-        baz: 'yellow',
-        foobar: 'red'
+        speech: 'cyan',
+        data: 'green',
+        info: 'yellow',
+        warn: 'red',
+        announce: 'white'
     }
 };
 
@@ -29,8 +31,12 @@ var setup = function(){
  });
 }
 
-var log = function(type,text){
+var log2 = function(type,text){
     logger.log(type,text);
+}
+
+var log=function log(type,text){
+    console.log(text[customLevels.colors[type]]);
 }
 
 module.exports.setup = setup;
