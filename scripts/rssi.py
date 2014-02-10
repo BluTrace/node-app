@@ -9,6 +9,7 @@ import sys
 import struct
 import bluetooth._bluetooth as bluez
 import json
+import subprocess
 from websocket import create_connection
 
 ws = create_connection("ws://localhost:9999")
@@ -164,6 +165,9 @@ d = dict()
 for x in xrange(SAMPLES):
  print "**SCANNING**"
  results = device_inquiry_with_with_rssi(sock)
+ p = subprocess.Popen(['../bluez-5.13/tools/hcitool','scan'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+ out, err = p.communicate()
+ print out.split()[2:]
  message = json.dumps(results)
  print message
  ws.send(message)
@@ -175,7 +179,12 @@ for x in xrange(SAMPLES):
  # else:   
  #  d[result[0]][x]=(d[result[0]][x]+result[1])/2
  #print "Move "+repr(x)
- time.sleep(1)
+ if(sys.argv[1]=='calibration'):
+  
+  co-ord = raw_input('Enter co-ordinate (x,y) ')
+  raw_input('Enter any key to continue...')
+ else:
+  time.sleep(1)
 
 for key, value in d.items():
  print repr(key) + "=>" + repr(value)

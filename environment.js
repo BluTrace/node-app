@@ -1,6 +1,6 @@
 var WebSocketServer = require('ws').Server
 var mediator = require('./mediator'),
-    logger = require('logger');
+    logger = require('./logger');
 
 var _ = require('underscore'),
     beacons = {},
@@ -53,7 +53,7 @@ var nominateStrongestBeacon = function(){
         change = true;
     }
     strongestBeacon = bs[0];
-    if(change){
+    if(change||(strongestBeacon&&strongestBeacon.isHot())){
         mediator.pubsub.emit('strongestBeaconChange');
     }
 }

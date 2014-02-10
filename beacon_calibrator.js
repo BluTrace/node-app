@@ -1,5 +1,6 @@
 var logger = require('./logger');
 logger.setup();
+logger.log('info','Loading...');
 
 var Beacon = require('./beacon'),
     fs = require('fs'),
@@ -11,8 +12,6 @@ var Beacon = require('./beacon'),
     Destinations = require('./destinations'),
     winston = require('winston'),
     Guide = require('./guide');
-
-Guide.speak('initialising!');
 
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })

@@ -8,7 +8,10 @@ var x = null,
 
 mediator.pubsub.on('strongestBeaconChange',function(msg){
     var beacon = Environment.getStrongestBeacon();
-    if(beacon.isHot()){
+    console.log(beacon.currentRSSI);
+console.log(beacon.zone);
+console.log(beacon.rssiAtAssociationRange);    
+if(beacon.isHot()){
         x = beacon.x;
         y = beacon.y;
         logger.log("announce","===========> Relocalizing to: ("+x+","+y+")");
