@@ -27,7 +27,7 @@ function Beacon(macAddress,name,x,y){
 Beacon.prototype.updateRSSI = function (rssi){
     this.currentRSSI = rssi;
     this.signalHistory.push(rssi);
-    if(this.rssiAtAssociationRange==null||this.rssiAtPeriphery==null) throw new Error(this.name()+" is not calibrated!");
+    //if(this.rssiAtAssociationRange==null||this.rssiAtPeriphery==null) throw new Error(this.name()+" is not calibrated!");
     if(this.currentRSSI>=this.rssiAtAssociationRange){
         this.zone = ZONES['HOT'];
     } else if(this.currentRSSI<this.rssiAtAssociationRange&&(this.currentRSSI>=this.rssiAtPeriphery)) {
@@ -51,12 +51,14 @@ Beacon.prototype.isHot = function(){
 }
 
 Beacon.prototype.selfCalibrate = function(){
-    this.rssiAtAssociationRange = Math.ceil(this.signalHistory
+    if(this.signalHistory.length>=2){
+     this.rssiAtAssociationRange = Math.ceil(this.signalHistory
         .map(function(el){return parseInt(el);})
-        .sort(function(a,b){return a>b;})
+        .sort(function(a,b){return a<b;})
         .slice(0,2)
         .reduce(function(a,b){return a+b})/2);
-    this.rssiAtPeriphery = this.rssiAtAssociationRange-20;
+     this.rssiAtPeriphery = this.rssiAtAssociationRange-20;
+    }
 }
 
 Beacon.prototype.calibrate = function(zone,rssi){

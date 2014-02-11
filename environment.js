@@ -1,6 +1,9 @@
-var WebSocketServer = require('ws').Server
+var WebSocketServer = require('ws').Server,
+    csv = require('csv');
+
 var mediator = require('./mediator'),
-    logger = require('./logger');
+    logger = require('./logger'),
+    Beacon = require('./beacon');
 
 var _ = require('underscore'),
     beacons = {},
@@ -66,7 +69,7 @@ var dumpToCSV = function(){
         rows.push([
             1,
             beacon.macAddress,
-            beacon.name(),
+            beacon.btName,
             beacon.x,
             beacon.y,
             'HOT',
@@ -75,7 +78,8 @@ var dumpToCSV = function(){
             beacon.rssiAtPeriphery
         ])
     }
-    csv.from(rows).to('data.csv');
+    console.log(rows);
+    csv().from(rows).to('calibration.csv');
 }
 
 var startListeningForCalibration = function(){
@@ -86,16 +90,17 @@ var startListeningForCalibration = function(){
          });
          ws.on('message', function(message) {
             var beacons = JSON.parse(message);
+            console.log(beacons);
             for(var b in beacons){
                 var macAddress = b,
                     name = beacons[b]['name'],
-                    xy = beacons[b]['x,y'].split(',')
+                    xy = beacons[b]['x,y'].split(',');
              var beacon = getBeacon(b);
                 if(beacon){
                     beacon.setName(name);
                     beacon.setXY(xy[0],xy[1]);
                 } else {
-                    beacon = new Beacon(macAddress,name,x,y);
+                    beacon = new Beacon(macAddress,name,xy[0],xy[1]);
                     addBeacon(beacon);
                 }
 

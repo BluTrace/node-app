@@ -19,8 +19,10 @@ csv()
             }
 
         });
-        Environment.startListeningForCalibration()
-    } );
+        Environment.startListening();
+        Environment.startListeningForCalibration();
+        logger.log('info','Ready!');
+     } );
 
 
 
