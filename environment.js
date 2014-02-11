@@ -67,10 +67,18 @@ var startListeningForCalibration = function(){
          ws.on('message', function(message) {
             var beacons = JSON.parse(message);
             for(var b in beacons){
+                var macAddress = b,
+                    name = beacons[b]['name'],
+                    xy = beacons[b]['x,y'].split(',')
              var beacon = getBeacon(b);
-             beacon.setName(beacons[b]['name']);
-             var c = beacons[b]['x,y'].split(',');
-             beacon.setXY(c[0],c[1]);
+                if(beacon){
+                    beacon.setName(name);
+                    beacon.setXY(xy[0],xy[1]);
+                } else {
+                    beacon = new Beacon(macAddress,name,x,y);
+                    addBeacon(beacon);
+                }
+
             }
          ws.send('ACK');
          });
