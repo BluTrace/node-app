@@ -50,6 +50,15 @@ Beacon.prototype.isHot = function(){
     return this.zone==ZONES['HOT'];
 }
 
+Beacon.prototype.selfCalibrate = function(){
+    this.rssiAtAssociationRange = Math.ceil(this.signalHistory
+        .map(function(el){return parseInt(el);})
+        .sort(function(a,b){return a>b;})
+        .slice(0,2)
+        .reduce(function(a,b){return a+b})/2);
+    this.rssiAtPeriphery = this.rssiAtAssociationRange-20;
+}
+
 Beacon.prototype.calibrate = function(zone,rssi){
     if(ZONES[zone]==undefined){
         throw new Error("invalid Zone!")

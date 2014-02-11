@@ -58,11 +58,31 @@ var nominateStrongestBeacon = function(){
     }
 }
 
+var dumpToCSV = function(){
+    var rows = [];
+    for(var i in beacons){
+        var beacon = beacons[i];
+        beacon.selfCalibrate();
+        rows.push([
+            1,
+            beacon.macAddress,
+            beacon.name(),
+            beacon.x,
+            beacon.y,
+            'HOT',
+            beacon.rssiAtAssociationRange,
+            'WARM',
+            beacon.rssiAtPeriphery
+        ])
+    }
+    csv.from(rows).to('data.csv');
+}
+
 var startListeningForCalibration = function(){
 	var cal = new WebSocketServer({port: 9998});
         cal.on('connection', function(ws) {
          ws.on('close',function(){
-          dump();
+          dumpToCSV();
          });
          ws.on('message', function(message) {
             var beacons = JSON.parse(message);
