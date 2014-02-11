@@ -6,5 +6,10 @@ var speak = function(words){
     exec('espeak '+words);
 }
 
+var bleep = function(){
+    exec('mplayer sounds/blip.wav');
+}
+
 module.exports.speak = speak;
+module.exports.bleep = bleep;
 
