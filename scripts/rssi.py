@@ -179,10 +179,10 @@ for x in xrange(SAMPLES):
       if(xy!='-1'):
        lookup_hash[lookup[i]]={'name':lookup[i+1],'x,y':xy}
        lookups_done[lookup[i]]=True
-       print lookup_hash
-       message = json.dumps(lookup_hash)
-       nl.send(message)
-       print nl.recv()
+    print lookup_hash
+    message = json.dumps(lookup_hash)
+    nl.send(message)
+    print nl.recv()
     raw_input('Enter any key to continue...')
  else:
   time.sleep(1)
