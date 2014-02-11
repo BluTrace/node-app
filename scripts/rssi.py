@@ -165,6 +165,7 @@ if mode != 1:
     print "result: %d" % result
 
 d = dict()
+lookups_done = dict()
 for x in xrange(SAMPLES):
  print "**SCANNING**"
  results = device_inquiry_with_with_rssi(sock)
@@ -175,11 +176,18 @@ for x in xrange(SAMPLES):
  if(sys.argv[1]=='calibration'):
     p = subprocess.Popen(['../bluez-5.13/tools/hcitool','scan'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     out, err = p.communicate()
-    lookup = out.split()[2:]
-    lookup_hash = {lookup[i]: {'name':lookup[i+1]} for i in range(0, len(lookup), 2)}
-    co-ord = raw_input('Enter co-ordinate (x,y) ')
-    lookup_hash['xy']=co-ord
-    print lookup_hash
+    lookup = out.split('\n')[1].split('\t')[1:]
+    lookup_hash = {}
+    for i in range(0, len(lookup), 2):
+     if(lookup[i] not in lookups_done):
+      xy = raw_input('Enter co-ordinate x,y for '+lookup[i+1]+' (-1 to skip)')
+      if(xy!='-1'):
+       lookup_hash[lookup[i]]={'name':lookup[i+1],'x,y':xy}
+       lookups_done[lookup[i]]=True
+       print lookup_hash
+       message = json.dumps(lookup_hash)
+       nl.send(message)
+       print nl.recv()
     raw_input('Enter any key to continue...')
  else:
   time.sleep(1)

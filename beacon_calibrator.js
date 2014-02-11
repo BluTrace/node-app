@@ -28,10 +28,12 @@ csv()
         Destinations.loadLocations();
         Router.loadPaths();
         Environment.startListening();
+        if(process.argv[2]=='calibration')
+         Environment.startListeningForCalibration();
         Sensor.startSensing();
         Guide.speak('Ready');
-        if(process.argv[2])
-            Router.setDestinationBeaconMacAddress(process.argv[2]);
+        //if(process.argv[2])
+        //    Router.setDestinationBeaconMacAddress(process.argv[2]);
     } );
 
 

@@ -58,6 +58,25 @@ var nominateStrongestBeacon = function(){
     }
 }
 
+var startListeningForCalibration = function(){
+	var cal = new WebSocketServer({port: 9998});
+        cal.on('connection', function(ws) {
+         ws.on('close',function(){
+          dump();
+         });
+         ws.on('message', function(message) {
+            var beacons = JSON.parse(message);
+            for(var b in beacons){
+             var beacon = getBeacon(b);
+             beacon.setName(beacons[b]['name']);
+             var c = beacons[b]['x,y'].split(',');
+             beacon.setXY(c[0],c[1]);
+            }
+         ws.send('ACK');
+         });
+        });
+}
+
 var startListening = function(){
     var wss = new WebSocketServer({port: 9999});
     wss.on('connection', function(ws) {
@@ -88,6 +107,7 @@ function parseMessage(message){
 
 
 module.exports.startListening = startListening;
+module.exports.startListeningForCalibration = startListeningForCalibration;
 module.exports.dump = dump;
 module.exports.addBeacon = addBeacon;
 module.exports.getStrongestBeacon = getStrongestBeacon;

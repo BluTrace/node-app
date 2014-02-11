@@ -37,6 +37,15 @@ Beacon.prototype.updateRSSI = function (rssi){
     }
 }
 
+Beacon.prototype.setName = function(n){
+   this.btName = n;
+}
+
+Beacon.prototype.setXY = function(x,y){
+  this.x = x;
+  this.y = y;
+}
+
 Beacon.prototype.isHot = function(){
     return this.zone==ZONES['HOT'];
 }
