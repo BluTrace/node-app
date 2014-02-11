@@ -168,11 +168,6 @@ d = dict()
 lookups_done = dict()
 for x in xrange(SAMPLES):
  print "**SCANNING**"
- results = device_inquiry_with_with_rssi(sock)
- message = json.dumps(results)
- print message
- ws.send(message)
- print ws.recv()
  if(sys.argv[1]=='calibration'):
     p = subprocess.Popen(['../bluez-5.13/tools/hcitool','scan'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     out, err = p.communicate()
@@ -191,6 +186,11 @@ for x in xrange(SAMPLES):
     raw_input('Enter any key to continue...')
  else:
   time.sleep(1)
+ results = device_inquiry_with_with_rssi(sock)
+ message = json.dumps(results)
+ print message
+ ws.send(message)
+ print ws.recv()
 
 for key, value in d.items():
  print repr(key) + "=>" + repr(value)
