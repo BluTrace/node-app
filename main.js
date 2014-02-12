@@ -11,30 +11,30 @@ var Beacon = require('./beacon'),
     Sensor = require('./sensor'),
     Destinations = require('./destinations'),
     winston = require('winston'),
-    Guide = require('./guide'),
-    connect = require('connect');
+    http = require('http'),
+    express = require('express');
 
-var app = connect()
-    .use(connect.static(__dirname))
-    .use(function (req, res){
-        if(req.url == '/destinations'){
-            console.dir(req);
-            console.log("Yoooo");
-            dumpToCSV(req.body, "destinations.csv");
-        }
-        if(req.url == '/connectivity'){
-            console.log(req.body);
-            console.log("Yippeee");
-            dumpToCSV(req.body, "beacon_connectivity.csv");
-        }
-        res.end('hello world\n');
-    });
+var app = express();
 
+app.use(express.static(__dirname));
 
-connect.createServer(app).listen(8081);
+app.get('/destinations', function(req, res){
+    console.log(req.param('destinations'));
+    dumpToCSV(req.param('destinations'),"destinations.csv");
+    res.send('Done');
+});
+
+app.get('/connectivity', function(req, res){
+    console.log(req.param('connectivity'));
+    dumpToCSV(req.param('connectivity'),"beacon-connectivity.csv");
+    res.send('Done');
+});
+
+app.listen(1337);
+console.log('Listening on port 1337');
 
 var dumpToCSV = function(data, filename) {
-//    csv().from(data).to(filename);
+    csv().from(data).to(filename);
 };
 
 csv()

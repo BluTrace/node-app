@@ -22,13 +22,11 @@ window.onload = function(){
             destinations += nodes[i].mac + "\n";
         }
         destination_csv.innerHTML = destinations;
-        $.post("destinations", destinations, function(resp) {
-            alert(resp);
-        }, "xml");
+        $.get( "destinations", { destinations: destinations } );
+
     }
 
     function generateConnectivityCSV() {
-        console.log("here");
         var connectivity = "";
         for(var i in nodes){
             connectivity += nodes[i].mac;
@@ -40,9 +38,7 @@ window.onload = function(){
             connectivity += "\n";
         }
         connectivity_csv.innerHTML = connectivity;
-        $.post("connectivity", connectivity, function(resp) {
-            alert(resp);
-        }, "xml");
+        $.get( "connectivity", { connectivity: connectivity } );
     }
 
     function importNodesFromCSV() {

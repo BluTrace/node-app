@@ -19,7 +19,8 @@
     "say": "0.5.0",
     "colors":"0.6.2",
     "winston":"*",
-    "connect":"*"
+    "express":"*",
+    "http":"*"
   },
   "repository": {
     "type": "git",
