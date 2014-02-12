@@ -19,14 +19,12 @@ var app = express();
 app.use(express.static(__dirname));
 
 app.get('/destinations', function(req, res){
-    console.log(req.param('destinations'));
     dumpToCSV(req.param('destinations'),"destinations.csv");
     res.send('Done');
 });
 
 app.get('/connectivity', function(req, res){
-    console.log(req.param('connectivity'));
-    dumpToCSV(req.param('connectivity'),"beacon-connectivity.csv");
+    dumpToCSV(req.param('connectivity'),"beacon_connectivity.csv");
     res.send('Done');
 });
 
