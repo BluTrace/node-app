@@ -148,7 +148,7 @@ function State(name,canvas,put_points,put_edges,current_msg,information,edges_in
             var clean_up_state = function(){
                 remove_all_listeners();
                 current_msg.innerHTML = "";
-                console.log("Leaving Select First Node state.. Hope you had a nice time selecting first node!");
+                console.log("Leaving Select First Node state..");
             };
 
             var add_edges_state_put_points_listener = function(){
@@ -217,7 +217,7 @@ function State(name,canvas,put_points,put_edges,current_msg,information,edges_in
             }
 
             this.action = function(){
-                console.log("In Selecting First Node state! Have a nice time selecting first node!");
+                console.log("In Selecting First Node state.");
                 initialize_state();
             }
         }
@@ -297,20 +297,25 @@ function State(name,canvas,put_points,put_edges,current_msg,information,edges_in
             nodes.push(node);
             node.draw(context);
 
-            var pointInfoDiv = document.createElement('div');
-            pointInfoDiv.innerHTML = "Point " + (nodes.length -1 )  + " located at (" + node.x  + "," + node.y + ")" +  " : ";
-            var value = "point_" + (nodes.length - 1);
-            pointInfoDiv.setAttribute('class', 'point-information');
-            var newTextArea = document.createElement('textarea');
-            newTextArea.setAttribute('id', value);
-            pointInfoDiv.appendChild(newTextArea);
-            information.appendChild(pointInfoDiv);
+            var nodeDiv = document.createElement('div');
+            nodeDiv.setAttribute('id', node.name);
+            nodeDiv.innerHTML = "Point " + (nodes.length -1 )  + " located at (" + node.x  + "," + node.y + ")" +  " : ";
+            var nodeName = document.createElement('input');
+            nodeName.setAttribute('name', "name");
+            nodeName.setAttribute('value', node.name);
+            nodeDiv.appendChild(nodeName);
+            var nodeMac = document.createElement('input');
+            nodeMac.setAttribute('name', "mac");
+            nodeMac.setAttribute('value', node.mac);
+            nodeDiv.appendChild(nodeMac);
+
+            information.appendChild(nodeDiv);
         }
 
         var clean_up_state = function(){
             remove_all_listeners();
             current_msg.innerHTML = "";
-            console.log("Leaving Making Nodes state... Hope you had a good time adding nodes!");
+            console.log("Leaving Making Nodes state...");
         };
 
         var put_points_state_put_points_listener = function(){

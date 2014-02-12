@@ -11,7 +11,12 @@ var Beacon = require('./beacon'),
     Sensor = require('./sensor'),
     Destinations = require('./destinations'),
     winston = require('winston'),
-    Guide = require('./guide');
+    Guide = require('./guide'),
+    connect = require('connect');
+
+connect.createServer(
+    connect.static(__dirname)
+).listen(8081);
 
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })
