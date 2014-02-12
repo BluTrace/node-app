@@ -4,7 +4,31 @@
    Author's custom styles
    ========================================================================== */
 
+#canvas {
+    border : 2px inset red;
+    float : left;
+    display: inline;
+}
 
+.point-information{
+    display: block;
+}
+
+#put-point{
+    display: block;
+}
+
+#put-edges{
+    display: inline;
+}
+
+.disabled{
+    background-color: lightcoral;
+}
+
+.enabled{
+    background-color: lightseagreen;
+}
 
 
 

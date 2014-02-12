@@ -21,6 +21,10 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="js/utils.js"></script>
+        <script src="js/ball.js"></script>
+        <script src="js/states.js"></script>
+        <script src="js/graphRepresentationRefactored.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -55,10 +59,17 @@
     </div>
 
     <div class="container">
-
-      <h3>Beacon Connectivity</h3>
-        <canvas height="500px" width="800px"></canvas>
-      <!-- Example row of columns -->
+      <div class="row">
+        <h3>Beacon Connectivity</h3>
+          <canvas id="canvas" width="800" height="500"></canvas>
+          <div id="edges"></div>
+          <button type="button" id="put-points" class="disabled"></button>
+          <button type="button" id="put-edges" class="disabled"></button>
+          <button type="button" id="to-csv" class="enabled">To CSV</button>
+          <div id="current-msg"></div>
+          <div id="information"></div>
+      </div>
+      <br />
       <div class="row">
 
       </div>
@@ -70,8 +81,8 @@
           <p>100 Days of Hardware - ThoughtWorks Gurgaon</p>
         </div>
       </footer>
-    </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>
+    </div> <!-- /container -->
+        <script src="js/vendor/jquery-1.10.1.min.js"></script>
 
         <script src="js/vendor/bootstrap.min.js"></script>
 
