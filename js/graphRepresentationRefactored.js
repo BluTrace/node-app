@@ -13,19 +13,30 @@ window.onload = function(){
         connectivity_csv = document.getElementById('connectivity-csv'),
         nodes = [],
         edges = [],
+        edge_weight = 1;
         mouse = captureMouse(canvas);
 
     function generateDestinationCSV() {
-        var destinations = [];
+        var destinations = "";
         for(var i in nodes){
             destinations += nodes[i].mac + "\n";
-            console.log(nodes[i]);
         }
         destination_csv.innerHTML = destinations;
     }
 
     function generateConnectivityCSV() {
-
+        console.log("here");
+        var connectivity = "";
+        for(var i in nodes){
+            connectivity += nodes[i].mac;
+            for(var j in edges){
+                if(edges[j][0].mac == nodes[i].mac){
+                    connectivity += "," + edges[j][1].mac + "," + edge_weight;
+                }
+            }
+            connectivity += "\n";
+        }
+        connectivity_csv.innerHTML = connectivity;
     }
 
     function importNodesFromCSV() {
