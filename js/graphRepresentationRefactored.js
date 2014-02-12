@@ -44,12 +44,44 @@ window.onload = function(){
     function importNodesFromCSV() {
         console.log(nodes);
         console.log(edges);
-        var myFile = new File('calibration.csv');
+        $.get( "import_nodes", function(resp) {
+            console.log(resp);
+            for(var i in resp){
+                makeImportedNode(resp[i][2],resp[i][3],resp[i][1],resp[i][0]);
+            }
+        });
+    }
+
+    function makeImportedNode(x,y,name,mac){
+        var context = canvas.getContext('2d');
+        var node = new Ball(10,"#ff0000",nodes.length);
+        centralize(node,canvas);
+        node.x = x;
+        node.y = y;
+        node.name = name;
+        node.mac = mac;
+        nodes.push(node);
+        node.draw(context);
+        console.log(node);
+
+        var nodeDiv = document.createElement('div');
+        nodeDiv.setAttribute('id', node.name);
+        nodeDiv.innerHTML = "Point " + (nodes.length -1 )  + " located at (" + node.x  + "," + node.y + ")" +  " : ";
+        var nodeName = document.createElement('input');
+        nodeName.setAttribute('name', "name");
+        nodeName.setAttribute('value', node.name);
+        nodeDiv.appendChild(nodeName);
+        var nodeMac = document.createElement('input');
+        nodeMac.setAttribute('name', "mac");
+        nodeMac.setAttribute('value', node.mac);
+        nodeDiv.appendChild(nodeMac);
+
+        information.appendChild(nodeDiv);
     }
 
     generate_destination_csv.addEventListener('click', generateDestinationCSV, false);
     generate_connectivity_csv.addEventListener('click', generateConnectivityCSV, false);
     import_node.addEventListener('click', importNodesFromCSV, false)
 
-    new State("NoState",canvas,put_points,put_edges,current_msg,information,edges_info,mouse, nodes, edges).action();
+    var state = new State("NoState",canvas,put_points,put_edges,current_msg,information,edges_info,mouse, nodes, edges).action();
 }

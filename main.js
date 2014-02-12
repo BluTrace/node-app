@@ -28,6 +28,20 @@ app.get('/connectivity', function(req, res){
     res.send('Done');
 });
 
+app.get('/import_nodes', function(req, res){
+    var balls = [];
+    csv()
+        .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })
+        .to.array(function(data){
+            data.forEach(function(row){
+                balls.push([row[1],row[2],row[3],row[4]]);
+            });
+            console.log(balls);
+            res.send(balls);
+        });
+
+});
+
 app.listen(1337);
 console.log('Listening on port 1337');
 
