@@ -1,7 +1,3 @@
-/**
- * Created by Dhruv on 2/8/14.
- */
-
 function Ball (radius, color, text) {
     if (radius === undefined) { radius = 40; }
     if (color === undefined) { color = "#ff0000"; }

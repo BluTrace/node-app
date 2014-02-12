@@ -13,7 +13,7 @@ window.onload = function(){
         connectivity_csv = document.getElementById('connectivity-csv'),
         nodes = [],
         edges = [],
-        edge_weight = 1;
+        edge_weight = 1,
         mouse = captureMouse(canvas);
 
     function generateDestinationCSV() {
@@ -22,6 +22,9 @@ window.onload = function(){
             destinations += nodes[i].mac + "\n";
         }
         destination_csv.innerHTML = destinations;
+        $.post("destinations", destinations, function(resp) {
+            alert(resp);
+        }, "xml");
     }
 
     function generateConnectivityCSV() {
@@ -37,11 +40,15 @@ window.onload = function(){
             connectivity += "\n";
         }
         connectivity_csv.innerHTML = connectivity;
+        $.post("connectivity", connectivity, function(resp) {
+            alert(resp);
+        }, "xml");
     }
 
     function importNodesFromCSV() {
         console.log(nodes);
         console.log(edges);
+        var myFile = new File('calibration.csv');
     }
 
     generate_destination_csv.addEventListener('click', generateDestinationCSV, false);

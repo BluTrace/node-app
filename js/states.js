@@ -1,7 +1,3 @@
-
-//var nodes = [];
-//var edges = [];
-
 function State(name,canvas,put_points,put_edges,current_msg,information,edges_info,mouse, nodes, edges) {
 
     var context = canvas.getContext('2d');

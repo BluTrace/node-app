@@ -14,9 +14,28 @@ var Beacon = require('./beacon'),
     Guide = require('./guide'),
     connect = require('connect');
 
-connect.createServer(
-    connect.static(__dirname)
-).listen(8081);
+var app = connect()
+    .use(connect.static(__dirname))
+    .use(function (req, res){
+        if(req.url == '/destinations'){
+            console.dir(req);
+            console.log("Yoooo");
+            dumpToCSV(req.body, "destinations.csv");
+        }
+        if(req.url == '/connectivity'){
+            console.log(req.body);
+            console.log("Yippeee");
+            dumpToCSV(req.body, "beacon_connectivity.csv");
+        }
+        res.end('hello world\n');
+    });
+
+
+connect.createServer(app).listen(8081);
+
+var dumpToCSV = function(data, filename) {
+//    csv().from(data).to(filename);
+};
 
 csv()
     .from.path('./calibration.csv', { comment: '#', delimiter: ',', escape: '"' })
