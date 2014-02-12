@@ -8,6 +8,7 @@ window.onload = function(){
         edges_info = document.getElementById('edges'),
         current_msg = document.getElementById('current-msg'),
         to_csv = document.getElementById('to-csv'),
+        import_node = document.getElementById('import-nodes'),
         mouse = captureMouse(canvas);
 
     var edge_cost = 1;
@@ -27,7 +28,12 @@ window.onload = function(){
         window.open(encodedUri);
         }
 
+    function importNodesFromCSV() {
+        
+    }
+
     to_csv.addEventListener('click', onToCSV, false);
+    import_node.addEventListener('click', importNodesFromCSV, false)
 
     new State("NoState",canvas,put_points,put_edges,current_msg,information,edges_info,mouse).action();
 }
