@@ -7,13 +7,14 @@ window.onload = function(){
         information = document.getElementById('information'),
         edges_info = document.getElementById('edges'),
         current_msg = document.getElementById('current-msg'),
-        to_csv = document.getElementById('to-csv'),
+        generate_connectivity_csv = document.getElementById('generate-connectivity-csv'),
+        generate_destination_csv = document.getElementById('generate-destination-csv'),
         import_node = document.getElementById('import-nodes'),
         mouse = captureMouse(canvas);
 
     var edge_cost = 1;
 
-    function onToCSV() {
+    function generateDestinationCSV() {
         var edges = edges_info.innerHTML.split(' ');
         var csv = "data:text/csv;charset=utf-8,";
         edges.pop(); //removing the last space
@@ -32,7 +33,7 @@ window.onload = function(){
         
     }
 
-    to_csv.addEventListener('click', onToCSV, false);
+    generate_destination_csv.addEventListener('click', generateDestinationCSV, false);
     import_node.addEventListener('click', importNodesFromCSV, false)
 
     new State("NoState",canvas,put_points,put_edges,current_msg,information,edges_info,mouse).action();
