@@ -8,6 +8,8 @@ function Ball (radius, color, text) {
     if (text === undefined) { text = ""}
     this.x = 0;
     this.y = 0;
+    this.name = "Dummy Name-"+text;
+    this.mac = "Dummy MAC-"+text;
     this.radius = radius;
 
     this.stressed = function(value,context){
@@ -103,6 +105,14 @@ Ball.prototype.getBounds = function() {
         width: this.radius * 2,
         height: this.radius * 2
     };
+}
+
+Ball.prototype.getMac = function() {
+    return this.mac;
+}
+
+Ball.prototype.getName = function() {
+    return this.name;
 }
 
 Ball.prototype.addOrRemoveMouseClick = function(canvas,mouse,doOnMouseClick,addOrRemove){

@@ -1,11 +1,9 @@
-/**
- * Created by Dhruv on 2/9/14.
- */
 
-function State(name,canvas,put_points,put_edges,current_msg,information,edges_info,mouse) {
+//var nodes = [];
+//var edges = [];
 
-    var nodes = [];
-    var edges = [];
+function State(name,canvas,put_points,put_edges,current_msg,information,edges_info,mouse, nodes, edges) {
+
     var context = canvas.getContext('2d');
 
     function AddEdgeState() {
@@ -401,5 +399,5 @@ function State(name,canvas,put_points,put_edges,current_msg,information,edges_in
     this.action = function() {
         throw "Called abstract method!";
     }
-}
 
+}

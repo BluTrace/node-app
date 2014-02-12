@@ -21,10 +21,11 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="js/graphRepresentationRefactored.js"></script>
         <script src="js/utils.js"></script>
         <script src="js/ball.js"></script>
         <script src="js/states.js"></script>
-        <script src="js/graphRepresentationRefactored.js"></script>
+
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -76,7 +77,21 @@
           <div id="information"></div>
       </div>
 
-      <hr>
+        <hr>
+
+        <div class="row">
+            <h3>destinations.csv</h3>
+            <div><pre id="destinations-csv"></pre></div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <h3>beacon_connectivity.csv</h3>
+            <div><pre id="connectivity-csv"></pre></div>
+        </div>
+
+        <hr>
 
       <footer>
         <div style="text-align: center;">
