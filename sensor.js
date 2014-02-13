@@ -46,11 +46,12 @@ var startSensing = function() {
                     //console.log('\tx = %d μT', x.toFixed(4));
                     //console.log('\ty = %d μT', y.toFixed(4));
                     //console.log('\tz = %d μT', z.toFixed(4));
-                    x=x+31;
-                    y=y-45.5;
-                    z=z+27;
-                    //console.log(x.toFixed(4)+','+y.toFixed(4)+','+z.toFixed(4));
+                    x=x+36;
+                    y=y-42;
+                    z=z+23;
+                    console.log(x.toFixed(4)+','+y.toFixed(4)+','+z.toFixed(4));
                     var degrees = 40+[Math.atan2(y,x)]*180/Math.PI;
+                    console.log(degrees);
                     if(Math.abs(degrees-degreeOfOrientation)>THRESHOLD){
                         Mediator.pubsub.emit('orientationChanged',JSON.stringify({'orientation':degrees}));
                         degreeOfOrientation = degrees;

@@ -66,6 +66,8 @@ var dumpToCSV = function(){
     for(var i in beacons){
         var beacon = beacons[i];
         beacon.selfCalibrate();
+        if(!beacon.rssiAtAssociationRange||!beacon.rssiAtPeriphery)
+            continue;
         rows.push([
             1,
             beacon.macAddress,

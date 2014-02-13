@@ -21,10 +21,12 @@ mediator.pubsub.on('orientationChanged',function(message){
      console.log('re-orienting')
      console.dir(message);
      var orientation = JSON.parse(message)['orientation'];
-     if(Math.abs(Vector.getDegree(requiredVector)-orientation)<6)
+     console.log(Vector.getDegree(requiredVector));
+     console.log(orientation)
+     if(Math.abs(Vector.getDegree(requiredVector)-orientation)<6){
       sound.bleep();
       logger.log('announce','-----> HOMING! <------');
-
+     }
     }
 });
 

@@ -136,7 +136,7 @@ def device_inquiry_with_with_rssi(sock):
 
     return results
 
-dev_id = 0
+dev_id = 1
 try:
     sock = bluez.hci_open_dev(dev_id)
 except:
@@ -171,7 +171,9 @@ for x in xrange(SAMPLES):
  if(sys.argv[1]=='calibration'):
     p = subprocess.Popen(['../bluez-5.13/tools/hcitool','scan'], stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     out, err = p.communicate()
-    lookup = out.split('\n')[1].split('\t')[1:]
+    print out
+    lookup = "".join(out.split('\n')[1:]).split('\t')[1:]
+    print lookup
     lookup_hash = {}
     for i in range(0, len(lookup), 2):
      if(lookup[i] not in lookups_done):

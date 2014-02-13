@@ -20,7 +20,9 @@
     "colors":"0.6.2",
     "winston":"*",
     "express":"*",
-    "http":"*"
+    "http":"*",
+    "bytes":"*",
+    "qs":"*"
   },
   "repository": {
     "type": "git",
