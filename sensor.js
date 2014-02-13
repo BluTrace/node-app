@@ -86,6 +86,9 @@ var startSensing = function() {
                     if(right){
                         Mediator.pubsub.emit('rightKeyPressed');
                     }
+                    if(left){
+                        Mediator.pubsub.emit('leftKeyPressed');
+                    }
 //                    if (left && right) {
 //                        sensorTag.notifySimpleKey(callback);
 //                    }

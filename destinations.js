@@ -24,3 +24,4 @@ var currentLocationChoice = function(){
 
 module.exports.nextLocationChoice = nextLocationChoice;
 module.exports.loadLocations = loadLocations;
+module.exports.currentLocationChoice = currentLocationChoice;

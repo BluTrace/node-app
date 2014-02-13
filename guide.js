@@ -35,8 +35,30 @@ mediator.pubsub.on('waypointReached',function(message){
 
 });
 
+mediator.pusub.on('pathCalculated',function(message){
+    speak('Very Good. Scan for new direction.');
+});
+
 mediator.pubsub.on('destinationReached',function(message){
     speak('You have reached your destination!');
+});
+
+mediator.pubsub.on('leftKeyPressed',function(){
+    var currentLocationName = localizer.getLocationName();
+    var currentDestination = Destinations.currentLocationChoice();
+    var speech = '';
+    if(currentLocationName){
+        speech = speech+'You are near '+ currentLocationName+' and ';
+    } else {
+        speech = speech+'Your location is unclear. Seek help!';
+    }
+    if(currentDestination){
+        var beacon = Environment.getBeacon(currentDestination);
+        speech = speech+' You want to go to '+beacon.btName;
+    } else {
+        speech = speech+' You do not have a destination set.'
+    }
+    speak(speech);
 });
 
 mediator.pubsub.on('rightKeyPressed',function(){
