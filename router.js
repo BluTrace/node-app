@@ -49,7 +49,8 @@ var calculate_path = function(source_mac, destination_mac){
     sourceMac = source_mac;
     destinationMac = destination_mac;
     var cheapest_paths_from_source = cheapest_paths(costs, source);
-    cheapestPath = cheapest_paths_from_source[destination];
+console.dir(cheapest_paths_from_source);    
+cheapestPath = cheapest_paths_from_source[destination];
     var path = [];
     cheapestPath.path.forEach(function(node){
         path.push(beacons_mac[node]);
