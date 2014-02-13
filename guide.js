@@ -36,7 +36,7 @@ mediator.pubsub.on('waypointReached',function(message){
 });
 
 mediator.pusub.on('pathCalculated',function(message){
-    speak('Very Good. Scan for new direction.');
+    setTimeout(function(){speak('Very Good. Scan for new direction.');},1000);
 });
 
 mediator.pubsub.on('destinationReached',function(message){
@@ -48,15 +48,19 @@ mediator.pubsub.on('leftKeyPressed',function(){
     var currentDestination = Destinations.currentLocationChoice();
     var speech = '';
     if(currentLocationName){
-        speech = speech+'You are near '+ currentLocationName+' and ';
+        speech = speech+'You were last near '+ currentLocationName+' and ';
     } else {
         speech = speech+'Your location is unclear. Seek help!';
     }
     if(currentDestination){
         var beacon = Environment.getBeacon(currentDestination);
-        speech = speech+' You want to go to '+beacon.btName;
+        if(beacon.btName==currentLocationName){
+            speech = 'Haha! You want to go where you already are!';
+        } else {
+            speech = speech+'You want to go to '+beacon.btName;
+        }
     } else {
-        speech = speech+' You do not have a destination set.'
+        speech = speech+'You do not have a destination set.'
     }
     speak(speech);
 });
