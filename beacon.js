@@ -19,7 +19,7 @@ function Beacon(macAddress,name,x,y){
     this.rssiAtAssociationRange = null
     this.rssiAtPeriphery        = null
     this.zone                   = ZONES['COLD']
-    this.name                   = function() { return "Beacon ("+ this.macAddress + ")"+this.btName }
+    this.name                   = function() { return "Beacon ("+ this.macAddress + ") "+this.btName }
     this.normalizedRSSI         = function() { return parseInt(this.currentRSSI*100 / this.rssiAtAssociationRange) }
     this.influencing            = function() { return this.zone!=ZONES['COLD'] }
 }

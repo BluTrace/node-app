@@ -55,14 +55,14 @@ var calculate_path = function(source_mac, destination_mac){
         path.push(beacons_mac[node]);
     });
     cheapestPath.path = path;
-    console.dir(cheapestPath);
+    //console.dir(cheapestPath);
     mediator.pubsub.emit('pathCalculated');
 
 };
 
 var setDestinationBeaconMacAddress = function(macAddress){
     destinationBeaconMacAddress = macAddress;
-    Guide.speak('Now you are travelling to '+macAddress);
+    //Guide.speak('Now you are travelling to '+macAddress);
     mediator.pubsub.emit('newDestination');
 }
 
@@ -76,12 +76,12 @@ module.exports.getPathVector = getPathVector;
 module.exports.isReachable = isReachable;
 
 mediator.pubsub.on('pathCalculated',function(){
-    console.dir(cheapestPath);
+    logger.log('data','[PATH] '+JSON.stringify(cheapestPath));
     var b1,b2;
     b1 = Environment.getBeacon(sourceMac);
     b2 = Environment.getBeacon(destinationMac);
     pathVector = Vector.calculate(b1,b2);
-    console.dir(pathVector);
+    logger.log('data','[REQUIRED VECTOR] '+JSON.stringify(pathVector));
 });
 
 mediator.pubsub.on('newDestination',function(){
@@ -96,8 +96,8 @@ function recalculatePath(){
     var strongestBeacon = Environment.getStrongestBeacon();
     if(strongestBeacon){
         var startingBeaconMacAddress = strongestBeacon.macAddress;
-        logger.log('info','startingBeaconMacAddress   : '+startingBeaconMacAddress);
-        logger.log('info','destinationBeaconMacAddress: '+destinationBeaconMacAddress);
+        logger.log('data','[ADDRESS] start       : '+startingBeaconMacAddress);
+        logger.log('data','[ADDRESS] destination : '+destinationBeaconMacAddress);
         if(startingBeaconMacAddress==destinationBeaconMacAddress)
             mediator.pubsub.emit('destinationReached');
         if(destinationBeaconMacAddress&&startingBeaconMacAddress)

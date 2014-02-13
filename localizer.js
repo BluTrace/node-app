@@ -1,6 +1,7 @@
 var mediator = require('./mediator'),
     Environment = require('./environment'),
-    logger = require('./logger');
+    logger = require('./logger'),
+    Guide = require('./guide');
 
 var x = null,
     y = null,
@@ -8,14 +9,15 @@ var x = null,
 
 mediator.pubsub.on('strongestBeaconChange',function(msg){
     var beacon = Environment.getStrongestBeacon();
-    console.log(beacon.currentRSSI);
-console.log(beacon.zone);
-console.log(beacon.rssiAtAssociationRange);    
-if(beacon.isHot()){
-        x = beacon.x;
-        y = beacon.y;
-        logger.log("announce","===========> Relocalizing to: ("+x+","+y+")");
-        mediator.pubsub.emit('newLocation');
+    logger.log("data","[STRONGEST BEACON] "+beacon.btName+" RSSI "+beacon.currentRSSI+" TRIGGER "+beacon.rssiAtAssociationRange);
+    if(beacon.isHot()){
+        if(x!=beacon.x||y!=beacon.y){
+         x = beacon.x;
+         y = beacon.y;
+         Guide.speak("Position updated. Scan for direction.");
+         logger.log("announce","[NEW POSITION] ("+x+","+y+")");
+         mediator.pubsub.emit('newLocation');
+        }
     }
 })
 

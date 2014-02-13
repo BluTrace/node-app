@@ -10,10 +10,10 @@ var customLevels = {
     },
     colors: {
         speech: 'cyan',
-        data: 'green',
+        data: 'grey',
         info: 'yellow',
         warn: 'red',
-        announce: 'white'
+        announce: 'green'
     }
 };
 
@@ -36,7 +36,8 @@ var log2 = function(type,text){
 }
 
 var log=function log(type,text){
-    console.log(text[customLevels.colors[type]]);
+    txt = "["+type.toUpperCase()+"] "+text;
+    console.log(txt[customLevels.colors[type]]);
 }
 
 module.exports.setup = setup;

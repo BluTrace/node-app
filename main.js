@@ -1,6 +1,6 @@
 var logger = require('./logger');
 logger.setup();
-logger.log('info','Loading...');
+logger.log('info','LOADING...');
 
 var Beacon = require('./beacon'),
     fs = require('fs'),
@@ -65,7 +65,7 @@ csv()
         Router.loadPaths();
         Environment.startListening();
         Sensor.startSensing();
-        Guide.speak('Ready');
+        Guide.speak('Waiting for sensors to get active.');
         if(process.argv[2])
             Router.setDestinationBeaconMacAddress(process.argv[2]);
     } );

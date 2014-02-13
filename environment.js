@@ -3,7 +3,8 @@ var WebSocketServer = require('ws').Server,
 
 var mediator = require('./mediator'),
     logger = require('./logger'),
-    Beacon = require('./beacon');
+    Beacon = require('./beacon'),
+    Sound = require('./sound');
 
 var _ = require('underscore'),
     beacons = {},
@@ -17,7 +18,7 @@ var getStrongestBeacon = function(){
     return strongestBeacon;
 }
 var addBeacon = function(beacon){
-    logger.log('announce','adding beacon: '+beacon.name());
+    logger.log('data','+ Beacon: '+beacon.name());
     beacons[beacon.macAddress]=beacon;
 }
 
@@ -125,10 +126,11 @@ var startListening = function(){
             }
             nominateStrongestBeacon();
             if(strongestBeacon){
-             console.log('strongest Beacon is: '+strongestBeacon.name());
+             //console.log('strongest Beacon is: '+strongestBeacon.name());
             } else {
-             console.log('No beacon!');
+             logger.log('warn','No beacon!');
             }
+            Sound.bleep();
             ws.send('ACK');
         });
     });

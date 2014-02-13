@@ -10,7 +10,7 @@ var calculate = function (sourceObj, destinationObj) {
     for(var i in directionVector){
         directionVector[i] = Math.floor(directionVector[i] * 100)/100;
     }
-    console.dir(directionVector);
+    //console.dir(directionVector);
     return directionVector;
 };
 

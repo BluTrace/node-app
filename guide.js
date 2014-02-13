@@ -6,7 +6,8 @@ var mediator = require('./mediator'),
     Vector = require('./vector'),
     Destinations = require('./destinations'),
     sound = require('./sound'),
-    logger = require('./logger');
+    logger = require('./logger'),
+    Environment = require('./environment');
 
 var speak = function(words){
     sound.speak(words);
@@ -18,14 +19,14 @@ module.exports.speak = speak;
 mediator.pubsub.on('orientationChanged',function(message){
     var requiredVector = Router.getPathVector();
     if(requiredVector){
-     console.log('re-orienting')
-     console.dir(message);
+     //console.log('re-orienting')
+     //console.dir(message);
      var orientation = JSON.parse(message)['orientation'];
-     console.log(Vector.getDegree(requiredVector));
-     console.log(orientation)
+     //console.log(Vector.getDegree(requiredVector));
+     //console.log(orientation)
      if(Math.abs(Vector.getDegree(requiredVector)-orientation)<6){
-      sound.bleep();
-      logger.log('announce','-----> HOMING! <------');
+      speak("Correct");
+      //logger.log('announce','-----> HOMING! <------');
      }
     }
 });
@@ -40,10 +41,12 @@ mediator.pubsub.on('destinationReached',function(message){
 
 mediator.pubsub.on('rightKeyPressed',function(){
     var choice = Destinations.nextLocationChoice();
+    logger.log("data","[CHOICE] "+choice);
+    var beacon = Environment.getBeacon(choice);
     if(Router.isReachable(choice)){
-        speak('Going to '+choice);
+        speak('Destination '+beacon.btName);
     } else {
-        speak('Unreachable destination!');
+        speak('Destination '+beacon.btName+ 'is not reachable');
     }
     Router.setDestinationBeaconMacAddress(choice);
 })
